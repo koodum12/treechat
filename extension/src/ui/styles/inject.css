@@ -1,0 +1,99 @@
+/* The only styles TreeChat adds to ChatGPT's own document. Everything is
+   scoped to elements TreeChat creates (data-treechat-owned). */
+
+[data-treechat-owned].treechat-branch-btn,
+[data-treechat-owned].treechat-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  flex: none;
+}
+
+/* Matches ChatGPT's 32×32 action-bar buttons. Color is copied from a native
+   sibling at runtime so light/dark both line up. */
+[data-treechat-owned].treechat-branch-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+/* Matches ChatGPT's 36px header buttons. The header is pointer-events:none
+   and native buttons opt back in, so this one has to as well. */
+[data-treechat-owned].treechat-toggle {
+  pointer-events: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: inherit;
+}
+
+[data-treechat-owned].treechat-toggle.treechat-floating {
+  position: fixed;
+  right: 20px;
+  bottom: 96px;
+  z-index: 2147482000;
+  border-radius: 999px;
+  background: Canvas;
+  color: CanvasText;
+  box-shadow: 0 0 0 1px rgba(127, 127, 127, 0.25), 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+[data-treechat-owned].treechat-branch-btn:hover,
+[data-treechat-owned].treechat-toggle:hover,
+[data-treechat-owned].treechat-toggle[aria-pressed="true"] {
+  background: rgba(127, 127, 127, 0.14);
+}
+
+[data-treechat-owned].treechat-branch-btn:focus-visible,
+[data-treechat-owned].treechat-toggle:focus-visible {
+  outline: 2px solid rgb(0, 102, 255);
+  outline-offset: 1px;
+}
+
+[data-treechat-owned].treechat-branch-btn[aria-busy="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ChatGPT-style tooltip: dark pill under the button. */
+[data-treechat-owned][data-treechat-tip]:hover::after,
+[data-treechat-owned][data-treechat-tip]:focus-visible::after {
+  content: attr(data-treechat-tip);
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgb(13, 13, 13);
+  color: rgb(255, 255, 255);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2147482001;
+}
+
+[data-treechat-owned].treechat-toggle.treechat-floating[data-treechat-tip]:hover::after {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+
+/* Brief highlight when jumping to a branch point. */
+.treechat-flash {
+  animation: treechat-flash 1.6s ease-out;
+  border-radius: 12px;
+}
+
+@keyframes treechat-flash {
+  0%, 30% { box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.35); }
+  100% { box-shadow: 0 0 0 3px rgba(0, 102, 255, 0); }
+}

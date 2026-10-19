@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "TreeChat",
+  "version": "0.1.0",
+  "description": "ChatGPT 대화를 트리 형태로 분기·정리합니다. 기존 ChatGPT 화면은 그대로 유지됩니다.",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "TreeChat 패널 열기/닫기"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["src/content/loader.js"],
+      "css": ["src/ui/styles/inject.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/*"],
+      "matches": ["https://chatgpt.com/*"]
+    }
+  ]
+}
